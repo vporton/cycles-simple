@@ -1,5 +1,15 @@
-actor {
-  public query func greet(name : Text) : async Text {
-    return "Hello, " # name # "!";
+import Cycles "mo:base/ExperimentalCycles";
+
+module {
+  type CanisterCyclesInfo = {
+    available: Nat;
+    threshold: Nat;
+    installAmount: Nat;
   };
+
+  // public func getCyclesInfo() : async Text {
+  //   {
+  //     available = Cycles.available();
+  //   }
+  // };
 };

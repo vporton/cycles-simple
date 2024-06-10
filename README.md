@@ -1,5 +1,7 @@
 # `cycles-simple`
 
+**This is an abandoned project, it won't be released.**
+
 _Not yet released._
 
 A simple Motoko library for managing cycles of child canisters (such as CanDB partition canisters).
