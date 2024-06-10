@@ -1,5 +1,21 @@
 # `cycles-simple`
 
+_Not yet released._
+
+A simple Motoko library for managing cycles of child canisters (such as CanDB partition canisters).
+
+It aims to mimic the bahavior of CycleOps, but canisters can be dynamically created.
+In fact, I recommend to fill the battery canister from CycleOps, the battery would then
+fill the child canisters.
+
+I am dissatisfied with [`cycles-manager`](https://github.com/CycleOperators/cycles-manager/) because:
+
+- It runs cycle filling from child canisters, so if one accidentally becomes frozen, need manual intervention.
+
+- `cycles-manager` is too complex. This library does not attempt to have a more complex algorithm than CycleOps.
+
+## More
+
 Welcome to your new `cycles-simple` project and to the Internet Computer development community. By default, creating a new project adds this README and some template files to your project directory. You can edit these template files to customize your project and to include your own code to speed up the development cycle.
 
 To get started, you might want to explore the project directory structure and the default configuration file. Working with this project in your development environment will not affect any production deployment or identity tokens.
