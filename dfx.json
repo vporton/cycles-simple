@@ -1,0 +1,16 @@
+{
+  "canisters": {
+    "cycles-simple-backend": {
+      "main": "src/cycles-simple-backend/main.mo",
+      "type": "motoko"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
