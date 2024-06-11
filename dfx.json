@@ -1,7 +1,7 @@
 {
   "canisters": {
     "cycles-simple-backend": {
-      "main": "src/cycles-simple-backend/main.mo",
+      "main": "src/lib.mo",
       "type": "motoko"
     }
   },
