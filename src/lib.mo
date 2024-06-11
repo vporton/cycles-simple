@@ -59,9 +59,10 @@ module {
 
   /// ChildActor API ///
 
-  public func askForCycles(threshold: Nat) {
+  public func askForCycles(batteryPrincipal: Principal, needy: Principal, threshold: Nat): async* () {
     if (Cycles.available() < threshold) {
-
+      let battery: BatteryActor = actor(Principal.toText(batteryPrincipal));
+      await battery.cycles_simple_askForCycles(needy);
     }
   };
 };
