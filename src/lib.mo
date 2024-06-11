@@ -9,6 +9,7 @@ module {
     installAmount: Nat;
   };
 
+  /// It makes sense to provide only, if the battery is controlled by childs.
   public type BatteryActor = actor {
     cycles_simple_askForCycles: query (needy: Principal) -> async ();
   };
