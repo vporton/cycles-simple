@@ -1,3 +1,4 @@
+import Cycles "mo:base/ExperimentalCycles";
 import Principal "mo:base/Principal";
 import HashMap "mo:base/HashMap";
 import Debug "mo:base/Debug";
@@ -8,7 +9,11 @@ module {
     installAmount: Nat;
   };
 
-  public type Child = actor {
+  public type BatteryActor = actor {
+    cycles_simple_askForCycles: query (needy: Principal) -> async ();
+  };
+
+  public type ChildActor = actor {
     cycles_simple_availableCycles: query () -> async Nat;
     cycles_simple_topUpCycles: (cycles: Nat) -> /*async*/ ();
   };
@@ -18,6 +23,8 @@ module {
   public type CanisterMap = HashMap.HashMap<Principal, CanisterKind>;
 
   public type CanisterKindsMap = HashMap.HashMap<CanisterKind, CanisterFulfillmentInfo>;
+
+  /// Battery API ///
 
   public type Battery = {
     canisterMap: CanisterMap;
@@ -29,7 +36,7 @@ module {
     let ?info = info0 else {
       Debug.trap("no such canister record");
     };
-    let child: Child = actor(Principal.toText(canisterId));
+    let child: ChildActor = actor(Principal.toText(canisterId));
     let remaining = await child.cycles_simple_availableCycles();
     if (remaining <= info.threshold) {
       child.cycles_simple_topUpCycles(info.installAmount);
@@ -48,5 +55,13 @@ module {
 
   public func insertCanisterKind(battery: Battery, kind: Text, info: CanisterFulfillmentInfo) {
     battery.canisterKindsMap.put(kind, info);
+  };
+
+  /// ChildActor API ///
+
+  public func askForCycles(threshold: Nat) {
+    if (Cycles.available() < threshold) {
+
+    }
   };
 };
