@@ -2,6 +2,8 @@ import Cycles "mo:base/ExperimentalCycles";
 import Principal "mo:base/Principal";
 import HashMap "mo:base/HashMap";
 import Debug "mo:base/Debug";
+import Hash "mo:base/Hash";
+import Text "mo:base/Text";
 
 module {
   public type CanisterFulfillmentInfo = {
@@ -30,6 +32,17 @@ module {
     canisterMap: CanisterMap;
     canisterKindsMap: CanisterKindsMap;
   };
+
+  public func newBattery(): Battery {
+    {
+      canisterMap = HashMap.HashMap<Principal, CanisterKind>(1, Principal.equal, Principal.hash);
+      canisterKindsMap = HashMap.HashMap<CanisterKind, CanisterFulfillmentInfo>(1, canisterKindEqual, canisterKindHash);
+    };
+  };
+
+  private func canisterKindEqual(a: CanisterKind, b: CanisterKind): Bool = a == b;
+
+  private func canisterKindHash(x: CanisterKind): Hash.Hash = Text.hash(x);
 
   public func topUpOneCanister(battery: Battery, canisterId: Principal): async* () {
     let info0 = do ? { battery.canisterKindsMap.get(battery.canisterMap.get(canisterId)!)! };
