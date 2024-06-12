@@ -11,12 +11,11 @@ module {
 
   /// It makes sense to provide only, if the battery is controlled by childs.
   public type BatteryActor = actor {
-    cycles_simple_askForCycles: query (needy: Principal) -> async ();
+    cycles_simple_provideCycles: query (needy: Principal) -> async ();
   };
 
   public type ChildActor = actor {
     cycles_simple_availableCycles: query () -> async Nat;
-    cycles_simple_topUpCycles: (cycles: Nat) -> /*async*/ ();
   };
 
   public type CanisterKind = Text;
@@ -40,7 +39,11 @@ module {
     let child: ChildActor = actor(Principal.toText(canisterId));
     let remaining = await child.cycles_simple_availableCycles();
     if (remaining <= info.threshold) {
-      child.cycles_simple_topUpCycles(info.installAmount);
+      Cycles.add<system>(info.installAmount);
+      let ic : actor {
+        deposit_cycles : shared { canister_id : Principal } -> async ();
+      } = actor ("aaaaa-aa");
+      await ic.deposit_cycles({canister_id = canisterId});
     };
   };
 
@@ -63,7 +66,7 @@ module {
   public func askForCycles(batteryPrincipal: Principal, needy: Principal, threshold: Nat): async* () {
     if (Cycles.available() < threshold) {
       let battery: BatteryActor = actor(Principal.toText(batteryPrincipal));
-      await battery.cycles_simple_askForCycles(needy);
-    }
+      await battery.cycles_simple_provideCycles(needy);
+    };
   };
 };
