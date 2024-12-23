@@ -56,16 +56,16 @@ module {
       await child.cycles_simple_availableCycles();
     }
     catch(e) {
-      switch (Error.code(e)) {
-        case (#call_error {err_code = 0}) {
-          if (not Text.contains(Error.message(e), #text "out of cycles")) {
-            return;
-          };
-        };
-        case _ {
-          return;
-        };
+      // switch (Error.code(e)) {
+      //   case (#call_error {err_code = 0}) {
+      if (not Text.contains(Error.message(e), #text "out of cycles")) {
+        return;
       };
+      //   };
+      //   case _ {
+      //     return;
+      //   };
+      // };
       0;
     };
     if (remaining <= info.threshold) {
