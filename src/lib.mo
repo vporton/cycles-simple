@@ -51,7 +51,22 @@ module {
       Debug.trap("no such canister record");
     };
     let child: ChildActor = actor(Principal.toText(canisterId));
-    let remaining = await child.cycles_simple_availableCycles();
+    let remaining = try {
+      await child.cycles_simple_availableCycles();
+    }
+    catch(e) {
+      switch (Error.code(e)) {
+        case (#call_error {err_code = 0}) {
+          if (not Error.message(e).contains("out of cycles")) {
+            return;
+          };
+        };
+        case _ {
+          return;
+        };
+      };
+      0;
+    };
     if (remaining <= info.threshold) {
       Cycles.add<system>(info.installAmount);
       let ic : actor {
