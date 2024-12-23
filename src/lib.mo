@@ -58,7 +58,7 @@ module {
     catch(e) {
       switch (Error.code(e)) {
         case (#call_error {err_code = 0}) {
-          if (not Error.message(e).contains("out of cycles")) {
+          if (not Text.contains(Error.message(e), #text "out of cycles")) {
             return;
           };
         };
