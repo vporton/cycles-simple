@@ -3,6 +3,7 @@ import Principal "mo:base/Principal";
 import Debug "mo:base/Debug";
 import Hash "mo:base/Hash";
 import Text "mo:base/Text";
+import Error "mo:base/Error";
 import StableHashMap "mo:stablehashmap/FunctionalStableHashMap";
 
 module {
